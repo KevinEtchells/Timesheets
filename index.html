@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Timesheet</title>
+        <style>
+            body {font-family: 'Arial', sans-serif; font-size: 10pt; margin: 0; padding: 5px;}
+            header {align-items: center; display: flex; justify-content: space-between;}
+            .table-scroll {overflow-x: scroll; width: calc(100vw - 10px);}
+            table {border: 1px solid #aaa;}
+            tbody tr:nth-child(even) {background-color: #ccc;}
+            input[type='date'] {width: 130px;}
+            input[type='number'] {padding: 2px; width: 50px;}
+            button {padding: 2px;}
+            td button {width: 100%;}
+            .Sunday {background-color: red;}
+            .Monday {background-color: orange;}
+            .Tuesday {background-color: yellow;}
+            .Wednesday {background-color: forestgreen;}
+            .Thursday {background-color: lightblue;}
+            .Friday {background-color: dodgerblue;}
+            .Saturday {background-color: mediumpurple;}
+        </style>
+        <script src="js/vue.min.js"></script>
+
+    </head>
+    
+    <body>
+        
+        <div id="app">
+            
+            <header>
+                <h1>Annualised Hours Timesheet</h1>
+                <div>
+                    <label for="cumulativeStart">Starting Hours:</label>
+                    <input id="cumulativeStart" v-model="data.startHours" type="number" v-on:change="save"/>
+                </div>
+            </header>
+            
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>WEEK COMMENCING</th>
+                            <th v-for="day in UTILS.DAYS" colspan="5">{{day.toUpperCase()}}</th>
+                            <th colspan="4">WEEK</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <template v-for="day in UTILS.DAYS">
+                                <th v-bind:class="day">Start</th>
+                                <th v-bind:class="day">Finish</th>
+                                <th v-bind:class="day">Lunch</th>
+                                <th v-bind:class="day">Total</th>
+                                <th v-bind:class="day">Notes</th>
+                            </template>
+                            <th>Total</th>
+                            <th>Under/Over</th>
+                            <th>Running Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="week, weekIndex in data.weeks">
+                            <td><input type="date" v-model="week.commencing" v-on:change="save"/></td>
+                            <template v-for="day in UTILS.DAYS">
+                                <td v-bind:class="day"><input type="time" v-model="week[day].start" v-on:change="save"/></td>
+                                <td v-bind:class="day"><input type="time" v-model="week[day].finish" v-on:change="save"/></td>
+                                <td v-bind:class="day"><input type="number" v-model="week[day].lunch" v-on:change="save"/></td>
+                                <td v-bind:class="day"><input type="number" v-model="UTILS.getDayTotal(week[day])" disabled="true"/></td>
+                                <td v-bind:class="day"><button v-on:click="editNote(weekIndex, day)">{{week[day].notes ? "Edit" : "..."}}</button></td>
+                            </template>
+                            <td><input type="number" v-bind:value="UTILS.getWeekTotal(week)" disabled="true"/></td>
+                            <td><input type="number" v-bind:value="UTILS.getWeekTotal(week) - 37" disabled="true"/></td>
+                            <td><input type="number" v-bind:value="UTILS.getCumulativeTotal(weekIndex, data)" disabled="true"/></td>
+                            <td><button>Print</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button v-on:click="addWeek">Add Week</button>
+            <button v-on:click="download">Download Data</button>
+        </div>
+
+        <script src="js/main.js"></script>
+
+    </body>
+</html>
