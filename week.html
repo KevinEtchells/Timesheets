@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Timesheet</title>
+        <style>
+            body {font-family: 'Arial', sans-serif; font-size: 10pt; margin: 0; padding: 10px;}
+            header {align-items: center; display: flex; justify-content: space-between;}
+            header img {max-height: 50px;}
+            p {padding: 10px 0;}
+            table {border: 1px solid #aaa; width: 100%;}
+            input {width: 100px;}
+            th {text-align: left;}
+            td, th {border: 1px solid; padding: 5px;}
+            @media print {
+                input {border: 0;}
+            }
+        </style>
+        <script src="js/vue.min.js"></script>
+    </head>
+    
+    <body>
+        
+        <div id="app">
+            
+            <header>
+                <h1>Weekly Time Sheet</h1>
+                <img src="assets/logo.png" alt="Q E 2 Centre"/>
+            </header>
+
+            <p><strong>Name: </strong>{{data.name}}</p>
+            <p><strong>Week commencing: </strong>{{thisWeek.commencing.substr(8, 2)}}/{{thisWeek.commencing.substr(5, 2)}}/{{thisWeek.commencing.substr(0, 4)}}</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>DAY</th>
+                        <th>START</th>
+                        <th>FINISH</th>
+                        <th>LUNCH</th>
+                        <th>TOTAL</th>
+                        <th>OVERTIME</th>
+                        <th>EVENT CODE</th>
+                        <th>NOTES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="day in UTILS.DAYS">
+                        <td>{{day}}</td>
+                        <td>{{thisWeek[day].start}}</td>
+                        <td>{{thisWeek[day].finish}}</td>
+                        <td>{{thisWeek[day].lunch}}</td>
+                        <td>{{UTILS.getDayTotal(thisWeek[day])}}</td>
+                        <td><input type="number" v-model="thisWeek[day].overtime" v-on:change="save"/></td>
+                        <td><input type="text" v-model="thisWeek[day].event" v-on:change="save"/></td>
+                        <td>{{thisWeek[day].notes}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Overtime: </strong><input type="number"/> <strong>Remote Support: </strong><input type="number"/></p>
+            <p><strong>Authorised by Manager: </strong>______________________</p>
+            <p><strong>Date: </strong>__________________</p>
+            
+        </div>
+
+        <script src="js/main.js"></script>
+
+    </body>
+</html>

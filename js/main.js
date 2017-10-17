@@ -41,9 +41,15 @@ var app;
                 }
             },
             data: {
-                weeks: [], 
+                weeks: [],
+                name: "",
                 startHours: 0
             }
+        },
+        computed: {
+            thisWeek: function () {
+                return this.data.weeks[window.location.search.replace("?index=", "")];
+            }  
         },
         methods: {
             addWeek: function () {

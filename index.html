@@ -8,7 +8,6 @@
             header {align-items: center; display: flex; justify-content: space-between;}
             .table-scroll {overflow-x: scroll; width: calc(100vw - 10px);}
             table {border: 1px solid #aaa;}
-            tbody tr:nth-child(even) {background-color: #ccc;}
             input[type='date'] {width: 130px;}
             input[type='number'] {padding: 2px; width: 50px;}
             button {padding: 2px;}
@@ -22,7 +21,6 @@
             .Saturday {background-color: mediumpurple;}
         </style>
         <script src="js/vue.min.js"></script>
-
     </head>
     
     <body>
@@ -30,8 +28,10 @@
         <div id="app">
             
             <header>
-                <h1>Annualised Hours Timesheet</h1>
+                <h1>Annualised Hours Time Sheet</h1>
                 <div>
+                    <label for="name">Name:</label>
+                    <input id="name" v-model="data.name" type="text" v-on:change="save"/>
                     <label for="cumulativeStart">Starting Hours:</label>
                     <input id="cumulativeStart" v-model="data.startHours" type="number" v-on:change="save"/>
                 </div>
@@ -73,7 +73,7 @@
                             <td><input type="number" v-bind:value="UTILS.getWeekTotal(week)" disabled="true"/></td>
                             <td><input type="number" v-bind:value="UTILS.getWeekTotal(week) - 37" disabled="true"/></td>
                             <td><input type="number" v-bind:value="UTILS.getCumulativeTotal(weekIndex, data)" disabled="true"/></td>
-                            <td><button>Print</button></td>
+                            <td><a v-bind:href="'week.html?index=' + weekIndex" target="_blank">Print</a></td>
                         </tr>
                     </tbody>
                 </table>
