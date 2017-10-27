@@ -35,7 +35,7 @@ var app;
                     var total = data.startHours,
                         i;
                     for (i = 0; i <= weekIndex; i = i + 1) {
-                        total = total + (this.getWeekTotal(data.weeks[i]) - 37);
+                        total = total + (Math.floor(this.getWeekTotal(data.weeks[i]) - 37));
                     }
                     return total;
                 }

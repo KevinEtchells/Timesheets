@@ -71,7 +71,7 @@
                                 <td v-bind:class="day"><button v-on:click="editNote(weekIndex, day)">{{week[day].notes ? "Edit" : "..."}}</button></td>
                             </template>
                             <td><input type="number" v-bind:value="UTILS.getWeekTotal(week)" disabled="true"/></td>
-                            <td><input type="number" v-bind:value="UTILS.getWeekTotal(week) - 37" disabled="true"/></td>
+                            <td><input type="number" v-bind:value="Math.floor(UTILS.getWeekTotal(week) - 37)" disabled="true"/></td>
                             <td><input type="number" v-bind:value="UTILS.getCumulativeTotal(weekIndex, data)" disabled="true"/></td>
                             <td><a v-bind:href="'week.html?index=' + weekIndex" target="_blank">Print</a></td>
                         </tr>
