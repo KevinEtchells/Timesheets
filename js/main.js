@@ -13,10 +13,10 @@ var app;
             UTILS: {
                 DAYS: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
                 getDayTotal: function (day) {
-                    if (day.start && day.finish && day.lunch) {
+                    if (day.start && day.finish) {
                         var date1 = new Date(2000, 0, 1, day.start.substr(0, 2), day.start.substr(3, 2)),
                             date2 = new Date(2000, 0, 1, day.finish.substr(0, 2), day.finish.substr(3, 2)),
-                            diff = date2 - date1 - (day.lunch * 60 * 60 * 1000); // milliseconds
+                            diff = date2 - date1 - ((day.lunch || 0) * 60 * 60 * 1000); // milliseconds
                         return (diff / 1000 / 60 / 60).toFixed(2); // hours
                     }
                 },
@@ -24,9 +24,11 @@ var app;
                     var self = this,
                         total = 0;
                     this.DAYS.forEach(function (day) {
-                        var dayTotal = parseFloat(self.getDayTotal(week[day]));
-                        if (dayTotal) {
-                            total = total + dayTotal;
+                        if (day !== "Saturday" && day !== "Sunday") { // don't count weekends in the weekly total, as O/T is calculated separately
+                            var dayTotal = parseFloat(self.getDayTotal(week[day]));
+                            if (dayTotal) {
+                                total = total + dayTotal;
+                            }
                         }
                     });       
                     return total;
