@@ -31,6 +31,8 @@
             <header>
                 <h1>Annualised Hours Time Sheet</h1>
                 <div>
+                    <button v-on:click="addWeek">Add Week</button>
+                    <button v-on:click="download">Download Data</button>
                     <label for="name">Name:</label>
                     <input id="name" v-model="data.name" type="text" v-on:change="save"/>
                     <label for="cumulativeStart">Starting Hours:</label>
@@ -62,7 +64,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="week, weekIndex in data.weeks">
+                        <tr v-for="week, weekIndex in weeksReversed">
                             <td><input type="date" v-model="week.commencing" v-on:change="save"/></td>
                             <template v-for="day in UTILS.DAYS">
                                 <td v-bind:class="day"><input type="time" v-model="week[day].start" v-on:change="save"/></td>
@@ -79,8 +81,6 @@
                     </tbody>
                 </table>
             </div>
-            <button v-on:click="addWeek">Add Week</button>
-            <button v-on:click="download">Download Data</button>
         </div>
 
         <script src="js/main.js"></script>

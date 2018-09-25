@@ -51,7 +51,10 @@ var app;
         computed: {
             thisWeek: function () {
                 return this.data.weeks[window.location.search.replace("?index=", "")];
-            }  
+            },
+            weeksReversed: function () {
+                return JSON.parse(JSON.stringify(this.data.weeks)).reverse();
+            }
         },
         methods: {
             addWeek: function () {
