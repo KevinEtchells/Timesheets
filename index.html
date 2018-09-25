@@ -4,13 +4,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Timesheet</title>
         <style>
-            body {font-family: 'Arial', sans-serif; font-size: 10pt; margin: 0; padding: 5px;}
+            body {font-family: 'Arial', sans-serif; font-size: 10pt; margin: 0; overflow-x: hidden; padding: 5px;}
             header {align-items: center; display: flex; justify-content: space-between;}
-            .table-scroll {overflow-x: scroll; width: calc(100vw - 10px);}
+            .table-scroll {overflow-x: scroll; width: calc(100vw - 25px);}
             table {border: 1px solid #aaa;}
             input[type='date'] {width: 130px;}
-            input[type='number'] {padding: 2px; width: 50px;}
-            button {padding: 2px;}
+            input[type='number'] {padding: 1px; width: 50px;}
+            input:disabled {width: 40px;}
+            button {padding: 1px;}
             td button {width: 100%;}
             .Sunday {background-color: red;}
             .Monday {background-color: orange;}
@@ -55,7 +56,7 @@
                                 <th v-bind:class="day">Notes</th>
                             </template>
                             <th>Total</th>
-                            <th>Under/Over</th>
+                            <th>Under / Over</th>
                             <th>Running Total</th>
                             <th></th>
                         </tr>
